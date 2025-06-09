@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script 
+      crossorigin 
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script 
+      crossorigin 
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const App = () => {
+        const [num1, setNum1] = React.useState(0);
+        const [num2, setNum2] = React.useState(0);
+        const [num3, setNum3] = React.useState(1);
+        const ch1 = () => setNum1((num1 + 1) % 6);
+        // const ch2 = () => setNum2(num2 + 1);
+         const ch2 = () => {
+          let next = num2 + num3;
+          if (next === 6) {
+            setNum3(-1);
+            next = 4;
+          } else if (next === -1) {
+            setNum3(1);
+            next = 1;
+          }
+          setNum2(next);
+          };
+        const arr = [
+          "안녕하세요", 
+          "반가워요",
+          "오늘은 덥네요.",
+          "배가 부르시죠",
+          "아아드실까요?",
+          "자고 싶어요!", 
+        ];
+        return (
+          <>
+          <h1>숫자 증가</h1>
+          {"arr = [" + arr +"]"}
+          <hr />
+          <h2> 
+            1번 형식 : <mark>0➡️1➡️2➡️3➡️4➡️5➡️0➡️1➡️2➡️3➡️4...</mark>
+          </h2>
+          <h2>{num1}</h2>
+          <h2>
+            <strong>{arr[num1]}</strong>
+          </h2>
+          <hr />
+          <button onClick={ch1}>{`값이 ${num1}인 버튼(${arr[num1]})`}</button>
+
+          <h2> 
+            2번 형식 : <mark>0➡️1➡️2➡️3➡️4➡️5➡️4➡️3➡️2➡️1➡️0➡️1➡️2...</mark>
+          </h2>
+          <h2>{num2}</h2>
+          <button onClick={ch2}>{`값이 ${num2}인 버튼(${arr[num2]})`}</button>
+          </>
+        );
+      };
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
