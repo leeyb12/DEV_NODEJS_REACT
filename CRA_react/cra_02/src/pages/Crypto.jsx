@@ -6,12 +6,13 @@ const Cryp = () => {
     const [inpw, setInpw] = useState('')
     const [skey, setSkey] = useState('')
 
-    const [encrypt, setEncrypt] = useState('')
-    const [decrypt, setDecrypt] = useState('')
+    const [encrypt, setEncrypt] = useState('') // 암호화
+    const [decrypt, setDecrypt] = useState('') // 복호화
+    const [sha, setSha] = useState('') // 단방향 SHA256 해시
 
     const encryptFn = () => {
         const data = {id: inid, pw: inpw} // 원하는 형태로 객체화
-        const encData = Crypto.AES.encrypt(  JSON.stringify(data), skey).toString() // skey와 함께 데이터를 암호화
+        const encData = Crypto.AES.encrypt(JSON.stringify(data), skey).toString() // skey와 함께 데이터를 암호화
         setEncrypt(encData)
     }
 
@@ -27,6 +28,13 @@ const Cryp = () => {
             alert('암호키 관리에 주의하세요.')
         }
     }
+
+    const sha256Fn = () => {
+        const data = {id: inid, pw: inpw} // 원하는 형태로 객체화
+        const encData = Crypto.SHA256(JSON.stringify(data), skey).toString() // skey와 함께 데이터를 암호화
+        setSha(encData) 
+    }
+
     /* 핸들러 */
     const handleIdChange = e => setInid(e.target.value)
     const handlePwChange = e => setInpw(e.target.value)
@@ -45,17 +53,20 @@ const Cryp = () => {
            <div>
               Key : <input type="password" onChange={handleKeyInput} value={skey} />
            </div>
-           <button onClick={encryptFn}>암호화 동작</button>
+           <button onClick={encryptFn} disabled={!(inid && inpw && skey)}>암호화 동작</button>
            <hr />
            <div>암호화 전: {(inid && inpw) && JSON.stringify({ id: inid, pw: inpw} )}</div><br />
            <div>{(!!encrypt) && `암호화 후: ${encrypt} / (글자수: ${encrypt.length})`}</div><hr />
            <div>
               복호화 암호키: 
-               <input type="password" ocChange={handleKeyInput} value={skey} />
+               <input type="password" onChange={handleKeyInput} value={skey} />
            </div>
-           <button onClick={decryptFn}>복호화 동작</button>
+           <button onClick={decryptFn} disabled={!(inid && inpw && skey)}>복호화 동작</button>
            <div>{!!decrypt && JSON.stringify(decrypt)}</div>
            <div>{`복호화된 데이터: Id는 ${decrypt.id}이고, PASSWORD는 ${decrypt.pw} 입니다.`}</div>
+           <hr />
+           <button onClick={sha256Fn}>단방향 암호화 하기</button>
+           <h3>{sha && `SHA256암호화: ${sha} (길이: ${sha.length})`}</h3>
         </>
 
     )
