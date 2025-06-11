@@ -1,0 +1,11 @@
+.ex7-div {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: aqua;
+}
+
+.ex7-div:hover {
+    transform: scale(0.8);
+    background-color: aquamarine;
+}
