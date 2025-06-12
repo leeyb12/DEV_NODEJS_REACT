@@ -6,7 +6,7 @@ const Css = () => {
 
     return (
         <>
-            <h1>6. 리액트에 CSS 스타일 적용하기</h1>
+            <h1>7. 리액트에 CSS 스타일 적용하기</h1>
 
             <div style={myStyle1}></div>
             <div style={{...myStyle1, backgroundColor: "blue"}}></div>
